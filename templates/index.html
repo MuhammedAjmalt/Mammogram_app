@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Additional CSS -->
+    <style>
+        .medical-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        .upload-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .medical-btn {
+            background-color: #2c3e50;
+            border: none;
+            padding: 10px 30px;
+            transition: all 0.3s ease;
+        }
+        .medical-btn:hover {
+            background-color: #34495e;
+            transform: translateY(-2px);
+        }
+        .upload-zone {
+            border: 2px dashed #dee2e6;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        .warning-message {
+            display: none;
+            color: #dc3545;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="medical-header">
+        <div class="container">
+            <h1 class="text-center">MammoCare AI</h1>
+            <p class="text-center mb-0">Advanced Mammogram Analysis Tool</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card upload-card">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <!-- Replace the existing img tag with this -->
+                            <img src="{{ url_for('static', filename='ribbon.jpg') }}" alt="Breast Cancer Awareness" class="img-fluid" style="max-width: 150px;">
+                            <h2 class="mt-3">Mammogram Image Upload</h2>
+                            <p class="text-muted">Upload a mammogram image for automated analysis and detection</p>
+                        </div>
+                        
+                        <form action="/upload" method="post" enctype="multipart/form-data" class="text-center" id="uploadForm" onsubmit="return validateForm()">
+                            <div class="upload-zone mb-4">
+                                <div class="mb-3">
+                                    <select class="form-select mb-3" name="preset_image" id="presetImage">
+                                        <option value="">Choose from uploaded images...</option>
+                                        <option value="sample1.jpg">Sample Mammogram 1</option>
+                                        <option value="sample2.jpg">Sample Mammogram 2</option>
+                                        <option value="sample3.jpg">Sample Mammogram 3</option>
+                                        <option value="sample4.jpg">Sample Mammogram 4</option>
+                                        <option value="sample5.jpg">Sample Mammogram 5</option>
+                                    </select>
+                                    
+                                    <div class="mt-3">
+                                        <h6 class="text-muted">OR</h6>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <input class="form-control" type="file" name="image" accept="image/*" 
+                                               id="imageInput" style="display: none;">
+                                        <label for="imageInput" class="btn btn-outline-secondary w-100">
+                                            <i class="fas fa-cloud-upload-alt me-2"></i>Upload New Image
+                                        </label>
+                                    </div>
+                                </div>
+                                <small class="text-muted">Supported formats: JPEG, PNG, DICOM</small>
+                            </div>
+                            <div class="warning-message" id="warningMessage">
+                                <i class="fas fa-exclamation-circle"></i> Please select an image to analyze
+                            </div>
+                            <button type="submit" class="btn btn-primary medical-btn btn-lg mt-3">
+                                Analyze Image
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <small class="text-muted">For medical professionals use only. Results should be verified by a qualified radiologist.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+    <script>
+    function validateForm() {
+        const presetImage = document.getElementById('presetImage').value;
+        const uploadedImage = document.getElementById('imageInput').files.length;
+        const warningMessage = document.getElementById('warningMessage');
+        
+        if (!presetImage && !uploadedImage) {
+            warningMessage.style.display = 'block';
+            return false;
+        }
+        warningMessage.style.display = 'none';
+        return true;
+    }
+
+    // Hide warning when user selects an image
+    document.getElementById('presetImage').addEventListener('change', function() {
+        document.getElementById('warningMessage').style.display = 'none';
+    });
+
+    document.getElementById('imageInput').addEventListener('change', function() {
+        document.getElementById('warningMessage').style.display = 'none';
+    });
+    </script>
+</body>
+</html>
