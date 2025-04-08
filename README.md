@@ -1,6 +1,6 @@
 
 
-# 🩻 Mammogram Image Analysis Web App
+#  Mammogram Image Analysis Web App
 
 This project is a web-based application that uses a YOLOv5 deep learning model to analyze mammogram images for potential abnormalities. The app provides both visual insights and a downloadable PDF report of the findings to aid medical professionals in diagnostics.
 
