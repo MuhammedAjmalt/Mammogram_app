@@ -89,7 +89,7 @@
                             </h3>
                             {% if detected_classes %}
                                 {% for class_info in detected_classes %}
-                                    <div class="alert {% if 'birads6' in class_info.label %}alert-danger
+                                    <div class="alert {% if 'birads5' in class_info.label %}alert-danger
                                          {% elif 'birads0' in class_info.label %}alert-warning
                                          {% elif 'birads2' in class_info.label %}alert-success
                                          {% else %}alert-info{% endif %} mb-3">
@@ -114,9 +114,17 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <a href="/" class="btn medical-btn">
+                            <a href="/" class="btn medical-btn me-3">
                                 <i class="fas fa-upload me-2"></i>Analyze Another Image
                             </a>
+                            <form action="{{ url_for('download_pdf') }}" method="post" style="display: inline-block;">
+                                <input type="hidden" name="original_img" value="{{ original }}">
+                                <input type="hidden" name="processed_img" value="{{ processed }}">
+                                <input type="hidden" name="detected_classes" value='{{ detected_classes|tojson|safe }}'>
+                                <button type="submit" class="btn medical-btn">
+                                    <i class="fas fa-download me-2"></i>Download PDF Report
+                                </button>
+                            </form>
                         </div>
 
                         <div class="mt-4 text-center">
